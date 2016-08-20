@@ -27,16 +27,16 @@ bpwatch start collectstatic  # metrics collection
 if [ ! "$DISABLE_COLLECTSTATIC" ] && [ -f "$MANAGE_FILE" ] && [ "$DJANGO_INSTALLED" ]; then
     set +e
 
+    puts-cmd "python $MANAGE_FILE compilescss"
+
+    # Run sass-processor
+    python $MANAGE_FILE compilescss
+
     puts-cmd "python $MANAGE_FILE collectstatic --noinput"
 
     # Run collectstatic, cleanup some of the noisy output.
     python $MANAGE_FILE collectstatic --noinput --traceback 2>&1 | sed '/^Post-processed/d;/^Copying/d;/^$/d' | indent
     COLLECTSTATIC_STATUS="${PIPESTATUS[0]}"
-
-    puts-cmd "python $MANAGE_FILE compilescss --use-processor-root"
-
-    # Run sass-processor
-    python $MANAGE_FILE compilescss
 
     set -e
 
