@@ -36,7 +36,7 @@ if [ ! "$DISABLE_COLLECTSTATIC" ] && [ -f "$MANAGE_FILE" ] && [ "$DJANGO_INSTALL
     puts-cmd "python $MANAGE_FILE compilescss --use-processor-root"
 
     # Run sass-processor
-    python $MANAGE_FILE compilescss --use-processor-root
+    python $MANAGE_FILE compilescss
 
     set -e
 
