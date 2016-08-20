@@ -33,6 +33,11 @@ if [ ! "$DISABLE_COLLECTSTATIC" ] && [ -f "$MANAGE_FILE" ] && [ "$DJANGO_INSTALL
     python $MANAGE_FILE collectstatic --noinput --traceback 2>&1 | sed '/^Post-processed/d;/^Copying/d;/^$/d' | indent
     COLLECTSTATIC_STATUS="${PIPESTATUS[0]}"
 
+    puts-cmd "python $MANAGE_FILE compilescss --use-processor-root"
+
+    # Run sass-processor
+    python $MANAGE_FILE compilescss --use-processor-root
+
     set -e
 
     # Display a warning if collectstatic failed.
